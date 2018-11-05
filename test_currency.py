@@ -20,6 +20,7 @@ rates = [
 def test_convert():
     assert convert(1, "USD", "USD") == 1
     assert convert(1, "USD", "EUR") == 0.877
+    assert round(convert(3, "USD", "EUR"), 3) == 2.631
 
 
 # (_from, to, value) = rates[0]

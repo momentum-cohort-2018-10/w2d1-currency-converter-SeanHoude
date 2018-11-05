@@ -3,12 +3,11 @@ rates = [('EUR', 'USD', 1.13966), ('USD', 'JPY', 113.215), ('USD', 'CAD', 1.3100
 ('JPY', 'EUR', 0.00775), ('CAD', 'EUR', 0.66987), ('CAD', 'JPY', 86.404)]
 
 
-def convert(_value, _from, _to):
-    if _from == _to:
-        return _value
+def convert(value, original, to):
+    if original == to:
+        return value
     else:
         for tup in rates:
-            if tup[0] == _from:
-                if tup[1] == _to:
-                    rate = tup[2]
-        return _value * rate
+            if original in tup and to in tup:
+                if original == tup[0]:
+                    return value * tup[2]
