@@ -1,17 +1,12 @@
 from currency import convert
+import pytest
 
 rates = [
-    ('EUR', 'USD', 1.13966),
     ('USD', 'JPY', 113.215),
-    ('USD', 'CAD', 1.31003),
-    ('EUR', 'JPY', 129.027), 
+    ('USD', 'CAD', 1.310),
+    ('EUR', 'JPY', 129.027),
     ('USD', 'EUR', 0.877),
-    ('JPY', 'USD', 0.00883),
-    ('CAD', 'USD', 0.763),
     ('EUR', 'CAD', 1.492),
-    ('JPY', 'CAD', 0.0115),
-    ('JPY', 'EUR', 0.00775),
-    ('CAD', 'EUR', 0.66987),
     ('CAD', 'JPY', 86.404)
 ]
 
@@ -25,6 +20,15 @@ def test_dollar_changes_correctly_to_euro():
 def test_non_dollar_amt_changes_correctly():
     assert round(convert(3, "USD", "EUR"), 3) == 2.631
 
+def test_euro_to_usd():
+    assert round(convert(1, "EUR", "USD"), 3) == 1.14
+
 def test_conversion_works_both_ways():
-    assert round(convert(3, "USD", "CAD"), 3) == 3.93
-    assert round(convert(3, "CAD", "USD"), 2) == 2.29
+    assert round(convert(1, "USD", "EUR"), 3) == .877
+    assert round(convert(1, "EUR", "USD"), 2) == 1.14
+    assert round(convert(1, "EUR", "JPY"), 3) == 129.027
+    assert round(convert(1, "JPY", "EUR"), 5) == .00775
+
+def test_raise_value_error_if_unknown_currency():
+    with pytest.raises(ValueError):
+        convert(1, "KOR", "EUR")
