@@ -1,6 +1,5 @@
 from currency import convert
 
-
 rates = [
     ('EUR', 'USD', 1.13966),
     ('USD', 'JPY', 113.215),
@@ -17,13 +16,15 @@ rates = [
 ]
 
 
-def test_convert():
+def test_same_currency_doesnt_change_value():
     assert convert(1, "USD", "USD") == 1
-    assert convert(1, "USD", "EUR") == 0.877
+
+def test_dollar_changes_correctly_to_euro():
+    assert round(convert(1, "USD", "EUR"), 3) == 0.877
+
+def test_non_dollar_amt_changes_correctly():
     assert round(convert(3, "USD", "EUR"), 3) == 2.631
 
-
-# (_from, to, value) = rates[0]
-
-# print(rates[0])
-# print(_from)
+def test_conversion_works_both_ways():
+    assert round(convert(3, "USD", "CAD"), 3) == 3.93
+    assert round(convert(3, "CAD", "USD"), 2) == 2.29
